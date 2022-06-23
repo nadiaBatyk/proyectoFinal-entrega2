@@ -153,3 +153,4 @@ class MongoClass {
         }
     }
 }
+export default MongoClass;
