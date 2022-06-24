@@ -9,8 +9,8 @@ class MongoDBProducts extends MongoClass {
   }
 
  
-
-  getProducts(req, res, next) {
+  isAdmin=true;
+  getProducts= (req, res, next)=> {
     //muestro todos los productos disponibles o si me pasan id, solo ese prod
     let { id } = req.params;
     if (id) {
@@ -33,15 +33,16 @@ class MongoDBProducts extends MongoClass {
       //pasa todo el array de productos en el json
     }
   }
-  createProduct(req, res, next) {
-    let isAdmin=true;
-    if (!isAdmin) {
+  createProduct = (req, res, next) => {
+    
+    if (!this.isAdmin) {
       return res.status(401).json({
         error: 401,
         description: `Route: ${req.url}, Method: ${req.method} Unauthorized`,
       });
     }
     let body = req.body;
+    
     super.create(body).then(
       (item) => {
         return res.json(item);
@@ -50,7 +51,7 @@ class MongoDBProducts extends MongoClass {
     );
   }
 
-  updateProduct(req, res, next) {
+  updateProduct =(req, res, next) => {
     let isAdmin=true;
     if (!isAdmin) {
       return res.status(401).json({
@@ -70,7 +71,7 @@ class MongoDBProducts extends MongoClass {
       );
     }
   }
-  deleteProduct(req, res, next) {
+  deleteProduct=(req, res, next) =>{
     let isAdmin=true;
     if (!isAdmin) {
       return res.status(401).json({
