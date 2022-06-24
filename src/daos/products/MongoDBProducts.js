@@ -1,89 +1,93 @@
-import MongoClass from "../../contenedores/mongoClass";
-import productsSchema from "../../schemas/productsSchema";
+import MongoClass from "../../contenedores/mongoClass.js";
+import productsSchema from "../../schemas/productsSchema.js";
 
 class MongoDBProducts extends MongoClass {
-    constructor() {
-        super('Products', productsSchema)
-    }
-
-    isAdmin = true;
+  
+  constructor() {
+    super("Products", productsSchema);
     
+  }
 
- getProducts(req, res, next) {
+ 
+
+  getProducts(req, res, next) {
     //muestro todos los productos disponibles o si me pasan id, solo ese prod
     let { id } = req.params;
     if (id) {
-        super.getById(parseInt(id)).then(
-            (product) => {
-                return res.json(product);
-            },
-            (error) => {
-                console.log(error);
-                return next(error);
-            }
-        );
+      super.getById(parseInt(id)).then(
+        (product) => {
+          return res.json(product);
+        },
+        (error) => {
+          console.log(error);
+          return next(error);
+        }
+      );
     } else {
-        super.getAll().then(
-            (lista) => {
-                return res.json(lista);
-            },
-            (error) => next(error)
-        );
-        //pasa todo el array de productos en el json
-    }
-}
- createProduct(req, res, next) {
-    if (!isAdmin) {
-        return res.status(401).json({
-            error: 401,
-            description: `Route: ${req.url}, Method: ${req.method} Unauthorized`,
-        });
-    }
-    let body= req.body;
-    super.create(body).then(
-        (item) => {
-            return res.json(item);
+      super.getAll().then(
+        (lista) => {
+          return res.json(lista);
         },
         (error) => next(error)
-    );
-}
-
- updateProduct(req, res, next) {
+      );
+      //pasa todo el array de productos en el json
+    }
+  }
+  createProduct(req, res, next) {
+    let isAdmin=true;
     if (!isAdmin) {
-        return res.status(401).json({
-            error: 401,
-            description: `Route: ${req.url}, Method: ${req.method} Unauthorized`,
-        });
+      return res.status(401).json({
+        error: 401,
+        description: `Route: ${req.url}, Method: ${req.method} Unauthorized`,
+      });
+    }
+    let body = req.body;
+    super.create(body).then(
+      (item) => {
+        return res.json(item);
+      },
+      (error) => next(error)
+    );
+  }
+
+  updateProduct(req, res, next) {
+    let isAdmin=true;
+    if (!isAdmin) {
+      return res.status(401).json({
+        error: 401,
+        description: `Route: ${req.url}, Method: ${req.method} Unauthorized`,
+      });
     }
     let { id } = req.params;
     let body = req.body;
     if (id) {
-        //si pasa el id actualiza el producto y pasalo al json
-        super.update(body).then(
-            (item) => {
-                return res.status(200).json(item);
-            },
-            (error) => next(error)
-        );
+      //si pasa el id actualiza el producto y pasalo al json
+      super.update(body).then(
+        (item) => {
+          return res.status(200).json(item);
+        },
+        (error) => next(error)
+      );
     }
-}
- deleteProduct(req, res, next) {
+  }
+  deleteProduct(req, res, next) {
+    let isAdmin=true;
     if (!isAdmin) {
-        return res.status(401).json({
-            error: 401,
-            description: `Route: ${req.url}, Method: ${req.method} Unauthorized`,
-        });
+      return res.status(401).json({
+        error: 401,
+        description: `Route: ${req.url}, Method: ${req.method} Unauthorized`,
+      });
     }
     let { id } = req.params;
     if (id) {
-        //si pasa el id borra el producto y pasalo al json
-        super.deleteById(parseInt(id)).then(
-            (item) => {
-                return res.status(200).json(item);
-            },
-            (error) => next(error)
-        );
+      //si pasa el id borra el producto y pasalo al json
+      super.deleteById(parseInt(id)).then(
+        (item) => {
+          return res.status(200).json(item);
+        },
+        (error) => next(error)
+      );
     }
-}
+  }
 }
 export default MongoDBProducts;

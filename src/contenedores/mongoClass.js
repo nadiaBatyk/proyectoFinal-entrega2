@@ -1,9 +1,12 @@
 import mongoose from "mongoose";
-import config from "../config/config";
+import config from "../config/config.js";
+import { ErrorCustom } from "../error/errorCustom.js";
+
 
 mongoose.connect(config.mongoDB.URL, config.mongoDB.options);
 
 class MongoClass {
+    collection;
     constructor(collectionName, schema) {
         this.collection = mongoose.model(collectionName, schema);
     }

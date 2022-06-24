@@ -1,7 +1,7 @@
 import express from "express";
-import routerCart from "./routes/cartRoutes";
-import notFoundRouter from "./routes/notFound";
-import routerProducts from "./routes/productsRoutes";
+//import routerCart from "./routes/cartRoutes";
+//import notFoundRouter from "./routes/notFound";
+import routerProducts from "./routes/productRoutes.js";
 
 const app = express();
 
@@ -9,8 +9,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/productos", routerProducts);
-app.use("/api/carrito", routerCart);
-app.use('**',notFoundRouter)
+//app.use("/api/carrito", routerCart);
+//app.use('**',notFoundRouter)
 app.use((err, req, res, next) => {
   console.log(err)
   res.status(err.status).json({ status: err.status, message: err.message });
