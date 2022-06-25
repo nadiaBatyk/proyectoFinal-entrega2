@@ -1,5 +1,5 @@
 import express from "express";
-//import routerCart from "./routes/cartRoutes";
+import routerCart from "./routes/cartRoutes.js";
 //import notFoundRouter from "./routes/notFound";
 import routerProducts from "./routes/productRoutes.js";
 
@@ -9,7 +9,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/productos", routerProducts);
-//app.use("/api/carrito", routerCart);
+app.use("/api/carrito", routerCart);
 //app.use('**',notFoundRouter)
 app.use((err, req, res, next) => {
   console.log(err)

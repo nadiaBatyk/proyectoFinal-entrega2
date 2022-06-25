@@ -117,16 +117,17 @@ class MongoClass {
     }
     async deleteProductFromCart(idProduct, idCart) {
         try {
-            const deletedItem = await this.collection.updateOne({ _id: idCart }, {
-                $pullAll: {
-                    products: [{ _id: idProduct }],
-                },
-            });
-            if (deletedItem?.deletedCount) {
-                return `Se eliminó el item`;
-            }
-            const err = new ErrorCustom("Item no encontrado", 404, "Not found");
-            throw err;
+            const deletedItem = await this.collection.findByIdAndUpdate(idCart, {
+                $pull: {
+                    products: { _id: idProduct },
+                }
+            },{safe:true});
+            console.log(deletedItem);
+            // if (deletedItem?.deletedCount) {
+            //     return `Se eliminó el item`;
+            // }
+            // const err = new ErrorCustom("Item no encontrado", 404, "Not found");
+            // throw err;
         } catch (error) {
             if (error instanceof ErrorCustom) {
                 throw error;

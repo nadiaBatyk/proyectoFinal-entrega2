@@ -1,16 +1,16 @@
 import { Router } from "express";
-import cartControllers from "../controllers/cartControllers";
+import * as daos   from "../daos/index.js";
 
 const routerCart = Router();
 
-routerCart.route("/").post(cartControllers.createCart);
+routerCart.route("/").post(daos.cartDao.createCart);
 
-routerCart.route("/:id").delete(cartControllers.deleteCart);
+routerCart.route("/:id").delete(daos.cartDao.deleteCart);
 
 routerCart.route('/:id/productos')
-.get(cartControllers.getAllProductsInCart)
-.post(cartControllers.addProduct)
+.get(daos.cartDao.getAllProductsInCart)
+.post(daos.cartDao.addProduct)
 
-routerCart.route('/:id/productos/:id_prod').delete(cartControllers.deleteProductFromCart)
+routerCart.route('/:id/productos/:id_prod').delete(daos.cartDao.deleteProductFromCart)
 
 export default routerCart;

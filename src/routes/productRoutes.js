@@ -1,18 +1,18 @@
 import { Router } from "express";
-import productDao   from "../daos/index.js";
+import * as daos   from "../daos/index.js";
 
 const routerProducts = Router();
 
 
 
 routerProducts.route('/')
-.get(productDao.productDao.getProducts)
-.post(productDao.productDao.createProduct)
+.get(daos.productDao.getProducts)
+.post(daos.productDao.createProduct)
 
 routerProducts.route('/:id')
-.get(productDao.productDao.getProducts)
-.put(productDao.productDao.updateProduct)
-.delete(productDao.productDao.deleteProduct);
+.get(daos.productDao.getProducts)
+.put(daos.productDao.updateProduct)
+.delete(daos.productDao.deleteProduct);
 
 
 export default routerProducts;
