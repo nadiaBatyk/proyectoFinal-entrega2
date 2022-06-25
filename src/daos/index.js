@@ -15,13 +15,4 @@ let productDao
     
 export default{productDao};
 
- async function daosCarrito(){
-    switch (process.env.DB_NAME){
-        case 'MongoDB':
-            const {MongoDBProducts} = await import("./products/MongoDBProducts");
-            return new MongoDBProducts();
-            
-        case 'Firebase':
-            break;
-    }
-}
+

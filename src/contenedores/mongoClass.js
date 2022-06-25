@@ -22,12 +22,14 @@ class MongoClass {
     async getById(id) {
         try {
             const idData = await this.collection.find({ _id: id });
-            if (idData) {
+           
+            if (idData?.length) {
                 return idData;
             }
             const err = new ErrorCustom("Item no encontrado", 404, "Not found");
             throw err;
         } catch (error) {
+            
             if (error instanceof ErrorCustom) {
                 throw error;
             } else {

@@ -14,7 +14,7 @@ class MongoDBProducts extends MongoClass {
     //muestro todos los productos disponibles o si me pasan id, solo ese prod
     let { id } = req.params;
     if (id) {
-      super.getById(parseInt(id)).then(
+      super.getById(id).then(
         (product) => {
           return res.json(product);
         },
