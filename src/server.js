@@ -2,7 +2,6 @@ import express from "express";
 import routerCart from "./routes/cartRoutes.js";
 //import notFoundRouter from "./routes/notFound";
 import routerProducts from "./routes/productRoutes.js";
-
 const app = express();
 
 app.use(express.json());

@@ -8,6 +8,6 @@ export default {
       useUnifiedTopology: true,
     },
   },firebase:{
-    serviceAcc : serviceAccount
+    serviceAcc : serviceAccount.default
   }
 };
