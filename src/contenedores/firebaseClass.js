@@ -2,6 +2,7 @@ import admin from "firebase-admin";
 import config from "../config/config.js";
 import { ErrorCustom } from "../error/errorCustom.js";
 
+
 admin.initializeApp({credential:admin.credential.cert({"type": "service_account",
 "project_id": "ecommercecoder-3f826",
 "private_key_id": "9e5e2cea11d3bed6f1fdeb73bfc273cd32e5f864",
@@ -17,6 +18,7 @@ class FirebaseClass {
   constructor(colectionName) {
     this.db = admin.firestore();
     this.collectionRef = this.db.collection(colectionName);
+    this.fieldValue=admin.firestore.FieldValue;
   }
   async getAll() {
     try {
@@ -62,10 +64,10 @@ class FirebaseClass {
       }
     }
   };
-  async update(item){
+  async update(item,id){
     try {
-      const docRef = this.collectionRef.doc(item.id);
-      const rawData = await docRef.update(item);
+      const docRef = this.collectionRef.doc(`${id}`);
+      const rawData = await docRef.update({id:id,...item});
       if (rawData) {
         return rawData;
       }
@@ -80,7 +82,7 @@ class FirebaseClass {
   };
   async deleteById(id) {
     try {
-      const docRef = this.collectionRef.doc(id).delete();
+      const docRef = this.collectionRef.doc(`${id}`).delete();
     } catch (error) {
       if (error instanceof ErrorCustom) {
         throw error;
@@ -111,7 +113,7 @@ class FirebaseClass {
   async deleteProductFromCart(idProduct, idCart) {
     try {
       const docRef = this.collectionRef.doc(idCart);
-      const rawData = await docRef.update({products:FieldValue.arrayRemove({id:idProduct})})
+      const rawData = await docRef.update({products:this.fieldValue.arrayRemove({id:idProduct})})
       
     } catch (error) {
       if (error instanceof ErrorCustom) {
@@ -125,7 +127,7 @@ class FirebaseClass {
   async addProductToCart(product, idCart)  {
     try {
       const docRef = this.collectionRef.doc(idCart);
-      const rawData = await docRef.update({products:FieldValue.arrayUnion(product)})
+      const rawData = await docRef.update({products:this.fieldValue.arrayUnion(product)})
       
     } catch (error) {
       if (error instanceof ErrorCustom) {

@@ -82,7 +82,7 @@ class MongoDBProducts extends MongoClass {
     let { id } = req.params;
     if (id) {
       //si pasa el id borra el producto y pasalo al json
-      super.deleteById(parseInt(id)).then(
+      super.deleteById(id).then(
         (item) => {
           return res.status(200).json(item);
         },

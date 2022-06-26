@@ -58,7 +58,7 @@ class FirebaseProducts extends FirebaseClass{
       let body = req.body;
       if (id) {
         //si pasa el id actualiza el producto y pasalo al json
-        super.update(body).then(
+        super.update(body,id).then(
           (item) => {
             return res.status(200).json(item);
           },
@@ -77,7 +77,7 @@ class FirebaseProducts extends FirebaseClass{
       let { id } = req.params;
       if (id) {
         //si pasa el id borra el producto y pasalo al json
-        super.deleteById(parseInt(id)).then(
+        super.deleteById(id).then(
           (item) => {
             return res.status(200).json(item);
           },
