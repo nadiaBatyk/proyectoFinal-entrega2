@@ -1,6 +1,8 @@
 import MongoDBProducts from "./products/MongoDBProducts.js";
 import dotenv from "dotenv";
 import MongoDBCart from "./cart/mongoDBCart.js";
+import FirebaseProducts from "./products/firebaseProducts.js";
+import FirebaseCart from "./cart/firebaseCart.js";
 dotenv.config();
 
 let productDao,cartDao;
@@ -11,6 +13,8 @@ let productDao,cartDao;
             break;
             
         case 'Firebase':
+            productDao = new FirebaseProducts();
+            cartDao = new FirebaseCart();
             break;
     }
 
